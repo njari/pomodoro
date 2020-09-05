@@ -12,16 +12,17 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class GoalActivity extends AppCompatActivity {
-    EditText focus ;
-    Button next ;
+    EditText focus;
+    Button next;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        focus = (EditText)findViewById(R.id.focus);
+        focus = (EditText) findViewById(R.id.focus);
         String goal = focus.getText().toString();
 
-        next = (Button)findViewById(R.id.next);
+        next = (Button) findViewById(R.id.next);
         next.setEnabled(false);
         focus.addTextChangedListener(new TextWatcher() {
             @Override

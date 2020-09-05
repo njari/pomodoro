@@ -50,7 +50,7 @@ public class TimerActivity extends AppCompatActivity {
         handler = new Handler();
         workTimer = (TextView) findViewById(R.id.workTimer);
         sessionState = (TextView) findViewById(R.id.sessionDetailDisplay);
-        final int[] D = {1};
+        final int[] D = {6};
 
 
         runnable = new Runnable() {

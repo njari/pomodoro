@@ -11,30 +11,46 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import in.njari.pomodoro.entity.Session;
+import javax.xml.datatype.Duration;
 
 public class MainActivity extends AppCompatActivity {
-    private String focus = "";
-    private Session session;
+    EditText focus;
+    Button next;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent = new Intent(this, GoalActivity.class);
-         startActivityForResult(intent, Activity.RESULT_OK);
+        setContentView(R.layout.activity_main);
+        focus = (EditText) findViewById(R.id.focus);
+        String goal = focus.getText().toString();
 
-         if (focus != null || !focus.isEmpty()) {
-             intent = new Intent(this, DurationActivity.class);
-             startActivity(intent);
-         }
+        next = (Button) findViewById(R.id.next);
+        next.setEnabled(false);
+        focus.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                next.setEnabled(true);
+            }
+        });
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, DurationActivity.class);
+                startActivity(intent);
 
 
-    }
+            }
+        });
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RESULT_OK && resultCode == RESULT_OK && data != null) {
-            focus = data.getStringExtra("focus");
-        }
     }
 }
