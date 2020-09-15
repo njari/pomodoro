@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +24,7 @@ public class DurationActivity extends AppCompatActivity {
     TextView hrsQuestion;
     EditText hrs;
     Button next;
+    private static final String TAG = "DurationActivity";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,7 +41,7 @@ public class DurationActivity extends AppCompatActivity {
         hrs.setInputType(InputType.TYPE_NUMBER_FLAG_SIGNED | InputType.TYPE_CLASS_NUMBER);
 
         final String focus = getIntent().getStringExtra("focus");
-
+        Log.i(TAG, " user's goal is to : " + focus);
 
         hrs.addTextChangedListener(new TextWatcher() {
             @Override
@@ -65,12 +67,15 @@ public class DurationActivity extends AppCompatActivity {
             public void onClick(View view) {
                 PomodoroDatabase db = Room.databaseBuilder(getApplicationContext(),
                         PomodoroDatabase.class, "pomodoro").allowMainThreadQueries().build();
-                final Session session = new Session(focus, Integer.parseInt(hrs.getText().toString()));
-                db.SessionDAO().create(session);
+                final Session session = new Session(0 ,focus, Integer.parseInt(hrs.getText().toString()));
+               long  id = db.SessionDAO().create(session);
+                Log.i(TAG,"Returning with the create method with id : " + id);
                 Toast toast = Toast.makeText(DurationActivity.this, "You've created an entity!", Toast.LENGTH_SHORT);
                 toast.show();
                 Intent toStartPage = new Intent(DurationActivity.this, BeginOrModifyActivity.class);
-                toStartPage.putExtra("SessionId", session.getId());
+                Log.i(TAG, "Session id is : " );
+                toStartPage.putExtra("SessionId", id);
+
                 startActivity(toStartPage);
             }
         });

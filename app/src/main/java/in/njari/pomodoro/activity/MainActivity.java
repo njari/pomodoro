@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         focus = (EditText) findViewById(R.id.focus);
-        String goal = focus.getText().toString();
+        final String[] goal = new String[1];
 
         next = (Button) findViewById(R.id.next);
         next.setEnabled(false);
@@ -40,12 +40,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 next.setEnabled(true);
+                goal[0] = focus.getText().toString();
             }
         });
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, DurationActivity.class);
+                intent.putExtra("focus", goal[0]);
                 startActivity(intent);
 
 

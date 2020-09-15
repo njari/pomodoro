@@ -1,7 +1,5 @@
 package in.njari.pomodoro.entity;
 
-import android.security.keystore.StrongBoxUnavailableException;
-
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -10,7 +8,7 @@ import androidx.room.PrimaryKey;
 @Entity
 public class Session {
     @PrimaryKey(autoGenerate = true)
-    private long id;
+    private int id = 0;
     @ColumnInfo(name = "focus")
     private String focus;
     @ColumnInfo
@@ -22,7 +20,7 @@ public class Session {
     @ColumnInfo
     private int rest = 5;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
@@ -46,7 +44,7 @@ public class Session {
         return rest;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -70,21 +68,32 @@ public class Session {
         this.rest = rest;
     }
 
-
-   public Session() {
+    @Ignore
+    public Session() {
     }
     @Ignore
-    public Session(String focus, int hrs) {
+    public Session(int id, String focus, int hrs) {
+        this.id = id;
         this.focus = focus;
         this.hrs = hrs;
         this.reps = hrs * 2;
+        this.work = 25;
+        this.rest = 5;
     }
-    @Ignore
-    Session(String focus, int hrs, int reps, int work, int rest) {
+
+    public Session(int id, String focus, int hrs, int reps, int work, int rest) {
+        this.id = id;
         this.focus = focus;
         this.hrs = hrs;
         this.reps = reps;
         this.work = work;
         this.rest = rest;
+    }
+
+
+    public String toDisplay() {
+        return
+                "Focus on : " + focus +
+                " for " + hrs + " hrs";
     }
 }
