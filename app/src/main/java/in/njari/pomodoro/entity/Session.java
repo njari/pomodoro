@@ -1,5 +1,7 @@
 package in.njari.pomodoro.entity;
 
+import android.util.Log;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -43,7 +45,7 @@ public class Session {
     }
 
     public int getReps() {
-    reps = hrs/2;
+    this.reps = hrs*60/(work+rest);
     return reps ;
     }
 
@@ -84,6 +86,7 @@ public class Session {
     }
     @Ignore
     public Session(int id, String focus, int hrs) {
+        Log.i("Session Constructor" , "sessgff");
         this.id = id;
         this.focus = focus;
         this.hrs = hrs;
@@ -103,5 +106,18 @@ public class Session {
 
     public boolean isCompleted() {
         return completed;
+    }
+
+    @Override
+    public String toString() {
+        return "Session{" +
+                "id=" + id +
+                ", focus='" + focus + '\'' +
+                ", hrs=" + hrs +
+                ", reps=" + reps +
+                ", work=" + work +
+                ", rest=" + rest +
+                ", completed=" + completed +
+                '}';
     }
 }

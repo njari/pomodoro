@@ -4,4 +4,9 @@
             android:fontStyle="normal"
             android:fontWeight="400"
             android:font="@font/eat_at_joe" />
+
+        <font
+            android:fontStyle="normal"
+            android:fontWeight="400"
+            android:font="@font/cutive_mono" />
 </font-family>

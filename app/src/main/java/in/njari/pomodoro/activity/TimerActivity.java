@@ -13,7 +13,8 @@ import static java.lang.Boolean.TRUE;
 public class TimerActivity extends AppCompatActivity {
     TextView timer;
     TextView sessionState;
-    private ProgressBar progress;
+    ProgressBar progress;
+    TextView aux_text1;
 
     private static final String TAG = "TimerActivity";
 
@@ -36,13 +37,14 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void startSession(final Session session) {
+        Log.i(TAG, "Printing the session object : " + session.toString());
+        progress = (ProgressBar) findViewById(R.id.sessionProgress);
+        progress.setProgress(20);
+        Log.i(TAG, " Progress.max : " + progress.getMax() + " Progress.progress : " + progress.getProgress());
 
-        progress = new ProgressBar(getApplicationContext());
-        progress.setMax(session.getReps());
-        progress.setProgress(0);
         Log.i(TAG, session.getFocus());
-
         setUpForWork(session);
+
         CountDownTimer countDownWork = new CountDownTimer(session.getWork()*60000 , 60000) {
             int i = session.getReps();
             @Override
@@ -54,9 +56,13 @@ public class TimerActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                progress.setProgress(session.getReps()-i);
+                progress.setProgress(progress.getProgress()+1);
+                Log.i(TAG, " Progress.max : " + progress.getMax() + " Progress.progress : " + progress.getProgress());
+                aux_text1 = (TextView) findViewById(R.id.aux_text1);
+                aux_text1.setText("");
+
                 i-- ;
-                if ( i == 0 ) {
+                if ( i <= 0 ) {
                     Log.i(TAG, "Ending session... rep = " + i );
                     endSession(session);
                 }
@@ -81,6 +87,8 @@ public class TimerActivity extends AppCompatActivity {
         sessionState.setText(session.getFocus());
         sessionState.setBackgroundColor(getResources().getColor(R.color.SkyBlue));
         timer = (TextView) findViewById(R.id.workTimer);
+        aux_text1 = (TextView) findViewById(R.id.aux_text1);
+        aux_text1.setText("Focus on");
 
     }
 
@@ -108,7 +116,7 @@ public class TimerActivity extends AppCompatActivity {
         TextView sessionState = (TextView) findViewById(R.id.sessionDetailDisplay);
         sessionState.setText("Your Session is complete! Congratulations!");
         session.setCompleted(TRUE);
-        sessionState.setBackgroundColor(getResources().getColor(R.color.SuccessfulGreen));
+        sessionState.setBackgroundColor(getResources().getColor(R.color.SuccessBlue));
         PomodoroDatabase db = PomodoroDatabase.getInstance(getApplicationContext());
         db.SessionDAO().updateSession(session);
 

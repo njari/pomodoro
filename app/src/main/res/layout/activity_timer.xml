@@ -27,8 +27,10 @@
         android:id="@+id/sessionDetailDisplay"
         android:layout_width="414dp"
         android:layout_height="455dp"
-        android:background="#B1ABAB"
+        android:background="@color/SkyBlue"
         android:gravity="center"
+        android:textAppearance="@style/cutive_mono"
+        android:textColor="#F8F8FA"
         android:textSize="36sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -38,25 +40,27 @@
         android:layout_width="150dp"
         android:layout_height="32dp"
         android:gravity="center_horizontal|center_vertical"
-        android:text="Focus on : "
+        android:text="Focus on"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.436"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.097" />
+        app:layout_constraintVertical_bias="0.095" />
 
     <ProgressBar
         android:id="@+id/sessionProgress"
         style="@android:style/Widget.ProgressBar.Horizontal"
-        android:layout_width="48dp"
-        android:layout_height="wrap_content"
+        android:layout_width="371dp"
+        android:layout_height="12dp"
+        android:progress="0"
         android:progressDrawable="@color/Yellow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.044"
+        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.569" />
+        app:layout_constraintVertical_bias="0.561" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

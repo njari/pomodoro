@@ -9,5 +9,8 @@
     <style name="timer_font" parent="@android:style/TextAppearance.Small">
         <item name="android:fontFamily">@font/eat_at_joe</item>
     </style>
+    <style name="cutive_mono" parent="@android:style/TextAppearance.Small">
+        <item name="android:fontFamily">@font/cutive_mono</item>
+    </style>
 
 </resources>

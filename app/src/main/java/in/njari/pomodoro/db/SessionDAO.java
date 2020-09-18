@@ -17,6 +17,6 @@ public interface SessionDAO {
     public Session findById(long id);
 
     @Update
-    public Session updateSession(Session session);
+    public int updateSession(Session session);
 
 }
