@@ -1,8 +1,10 @@
 package in.njari.pomodoro.activity;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,9 +31,7 @@ public class TimerActivity extends AppCompatActivity {
             Intent intent = new Intent(TimerActivity.this, MainActivity.class);
             startActivity(intent);
         }
-
         PomodoroDatabase db = PomodoroDatabase.getInstance(getApplicationContext());
-
         Session session = db.SessionDAO().findById(sessionId);
         startSession(session);
     }
@@ -39,7 +39,8 @@ public class TimerActivity extends AppCompatActivity {
     private void startSession(final Session session) {
         Log.i(TAG, "Printing the session object : " + session.toString());
         progress = (ProgressBar) findViewById(R.id.sessionProgress);
-        progress.setProgress(20);
+        progress.setMax(session.getReps());
+        progress.setProgress(0);
         Log.i(TAG, " Progress.max : " + progress.getMax() + " Progress.progress : " + progress.getProgress());
 
         Log.i(TAG, session.getFocus());
@@ -101,7 +102,13 @@ public class TimerActivity extends AppCompatActivity {
             @Override
             public void onTick(long l) {
                 updateTimer(l);
+                if (l < 1200000) {
+                    // beep thrice
+                    MediaPlayer mediaPlayer =  MediaPlayer.create(TimerActivity.this, R.raw.goes_without_saying);
+                        for (int i = 0 ; i < 3  ; i++) { mediaPlayer.start(); }
+                }
             }
+
             @Override
             public void onFinish() {
                 TextView sessionState = (TextView) findViewById(R.id.sessionDetailDisplay);
