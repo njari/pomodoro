@@ -33,7 +33,8 @@ public class Session {
     }
 
     public int getReps() {
-        return reps;
+    reps = hrs/2;
+    return reps ;
     }
 
     public int getWork() {
@@ -93,7 +94,7 @@ public class Session {
 
     public String toDisplay() {
         return
-                "Focus on : " + focus +
+                focus +
                 " for " + hrs + " hrs";
     }
 }
