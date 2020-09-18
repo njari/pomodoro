@@ -1,10 +1,15 @@
 package in.njari.pomodoro.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 import in.njari.pomodoro.db.PomodoroDatabase;
@@ -13,6 +18,7 @@ import in.njari.pomodoro.entity.Session;
 public class TimerActivity extends AppCompatActivity {
     TextView timer;
     TextView sessionState;
+    private ProgressBar progress;
 
     private static final String TAG = "TimerActivity";
 
@@ -28,33 +34,39 @@ public class TimerActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
-        PomodoroDatabase db = Room.databaseBuilder(getApplicationContext(),
-                PomodoroDatabase.class, "pomodoro").allowMainThreadQueries().build();
+        PomodoroDatabase db = PomodoroDatabase.getInstance(getApplicationContext());
 
         Session session = db.SessionDAO().findById(sessionId);
         startSession(session);
     }
 
     private void startSession(final Session session) {
-        long work = session.getWork()*60000;
-        Log.i(TAG, session.toDisplay());
-        final long rest = session.getRest()*60000;
-        setUpForWork(session);
 
-        CountDownTimer countDownWork = new CountDownTimer(work , 60000) {
+        progress = new ProgressBar(getApplicationContext());
+        progress.setMax(session.getReps());
+        progress.setProgress(0);
+        Log.i(TAG, session.getFocus());
+
+        setUpForWork(session);
+        CountDownTimer countDownWork = new CountDownTimer(session.getWork()*60000 , 60000) {
             int i = session.getReps();
             @Override
-            public void onTick(long l) {
+            public void onTick(long l)
+            {
+                Log.i(TAG, "Work Timer running  ...");
                 updateTimer(l);
             }
 
             @Override
             public void onFinish() {
+                progress.setProgress(session.getReps()-i);
                 i-- ;
                 if ( i == 0 ) {
+                    Log.i(TAG, "Ending session... rep = " + i );
                     endSession();
                 }
                 else {
+                    Log.i(TAG, "Initiating Rest ... rep = " + i );
              initiateRest(session);
                 }
             }
@@ -64,17 +76,23 @@ public class TimerActivity extends AppCompatActivity {
    private void updateTimer(long l) {
         Integer mins = (int) l / 60000 ;
         timer = (TextView) findViewById(R.id.workTimer);
+        Log.i(TAG, "updating timer to " + mins.toString());
         timer.setText( mins.toString());
     }
 
     private void setUpForWork(Session session) {
+        Log.i(TAG, "Setting up for work ... ");
         sessionState = (TextView) findViewById(R.id.sessionDetailDisplay);
-        sessionState.setText(session.toDisplay());
+        sessionState.setText(session.getFocus());
+        sessionState.setBackgroundColor(getResources().getColor(R.color.SkyBlue));
+        timer = (TextView) findViewById(R.id.workTimer);
+
     }
 
     private void initiateRest( final Session session ) {
         TextView sessionState = (TextView) findViewById(R.id.sessionDetailDisplay);
         sessionState.setText("Take a break!");
+        sessionState.setBackgroundColor(getResources().getColor(R.color.Yellow));
         // setup a timer
         CountDownTimer countDownRest = new CountDownTimer(session.getRest()*60*1000, 60000) {
             @Override
@@ -94,6 +112,7 @@ public class TimerActivity extends AppCompatActivity {
     private void endSession() {
         TextView sessionState = (TextView) findViewById(R.id.sessionDetailDisplay);
         sessionState.setText("Your Session is complete! Congratulations!");
+        sessionState.setBackgroundColor(getResources().getColor(R.color.SuccessfulGreen));
     }
 
 }

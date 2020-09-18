@@ -13,9 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
-
-import javax.xml.datatype.Duration;
 
 import in.njari.pomodoro.db.PomodoroDatabase;
 import in.njari.pomodoro.entity.Session;
@@ -24,6 +21,7 @@ public class DurationActivity extends AppCompatActivity {
     TextView hrsQuestion;
     EditText hrs;
     Button next;
+    TextView message;
     private static final String TAG = "DurationActivity";
 
     @Override
@@ -33,6 +31,9 @@ public class DurationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         hrsQuestion = (TextView) findViewById(R.id.focusQuestion);
         hrsQuestion.setText("For how long? (in hrs)");
+        message = (TextView) findViewById(R.id.message);
+        message.setText("Each Pomodoro cycle is for 30 mins : 25 minutes of work + 5 minutes of rest. " +
+                "The recommended amount of time is 2 hrs i.e. 4 such cycles.");
 
         next = (Button) findViewById(R.id.next);
         next.setEnabled(false);
@@ -65,8 +66,8 @@ public class DurationActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PomodoroDatabase db = Room.databaseBuilder(getApplicationContext(),
-                        PomodoroDatabase.class, "pomodoro").allowMainThreadQueries().build();
+                PomodoroDatabase db = PomodoroDatabase.getInstance(getApplicationContext());
+
                 final Session session = new Session(0 ,focus, Integer.parseInt(hrs.getText().toString()));
                long  id = db.SessionDAO().create(session);
                 Log.i(TAG,"Returning with the create method with id : " + id);

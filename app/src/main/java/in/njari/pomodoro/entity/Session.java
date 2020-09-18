@@ -5,6 +5,8 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import static java.lang.Boolean.FALSE;
+
 @Entity
 public class Session {
     @PrimaryKey(autoGenerate = true)
@@ -19,6 +21,14 @@ public class Session {
     private int work = 25;
     @ColumnInfo
     private int rest = 5;
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
+    @ColumnInfo
+    private boolean completed = FALSE;
+
 
     public int getId() {
         return id;
@@ -91,10 +101,7 @@ public class Session {
         this.rest = rest;
     }
 
-
-    public String toDisplay() {
-        return
-                focus +
-                " for " + hrs + " hrs";
+    public boolean isCompleted() {
+        return completed;
     }
 }

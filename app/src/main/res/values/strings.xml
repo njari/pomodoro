@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Pomodoro</string>
     <string name="start">START</string>
+    <string name="goal_message">Having a clear defined goal for this session will help you have a more productive session. Set a meaningful goal. :)</string>
 </resources>

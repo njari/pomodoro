@@ -8,29 +8,55 @@
 
     <TextView
         android:id="@+id/workTimer"
-        android:layout_width="279dp"
-        android:layout_height="152dp"
+        android:layout_width="413dp"
+        android:layout_height="176dp"
         android:foregroundGravity="center|fill"
+        android:gravity="center_horizontal|center_vertical"
         android:text="10:00"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textAppearance="@style/timer_font"
         android:textColor="@android:color/black"
-        android:textSize="36sp"
+        android:textSize="65dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.643"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.784" />
+        app:layout_constraintVertical_bias="0.936" />
 
     <TextView
         android:id="@+id/sessionDetailDisplay"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginTop="100dp"
-        android:gravity="center"
+        android:layout_width="414dp"
+        android:layout_height="455dp"
         android:background="#B1ABAB"
+        android:gravity="center"
         android:textSize="36sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/aux_text1"
+        android:layout_width="150dp"
+        android:layout_height="32dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="Focus on : "
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.436"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.097" />
+
+    <ProgressBar
+        android:id="@+id/sessionProgress"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:progressDrawable="@color/Yellow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.044"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.569" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
