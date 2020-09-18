@@ -1,19 +1,14 @@
 package in.njari.pomodoro.activity;
-
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 import in.njari.pomodoro.db.PomodoroDatabase;
 import in.njari.pomodoro.entity.Session;
+import static java.lang.Boolean.TRUE;
 
 public class TimerActivity extends AppCompatActivity {
     TextView timer;
@@ -63,7 +58,7 @@ public class TimerActivity extends AppCompatActivity {
                 i-- ;
                 if ( i == 0 ) {
                     Log.i(TAG, "Ending session... rep = " + i );
-                    endSession();
+                    endSession(session);
                 }
                 else {
                     Log.i(TAG, "Initiating Rest ... rep = " + i );
@@ -109,10 +104,14 @@ public class TimerActivity extends AppCompatActivity {
 
     }
 
-    private void endSession() {
+    private void endSession(Session session) {
         TextView sessionState = (TextView) findViewById(R.id.sessionDetailDisplay);
         sessionState.setText("Your Session is complete! Congratulations!");
+        session.setCompleted(TRUE);
         sessionState.setBackgroundColor(getResources().getColor(R.color.SuccessfulGreen));
+        PomodoroDatabase db = PomodoroDatabase.getInstance(getApplicationContext());
+        db.SessionDAO().updateSession(session);
+
     }
 
 }
