@@ -4,7 +4,6 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
-import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +16,7 @@ public class TimerActivity extends AppCompatActivity {
     TextView sessionState;
     ProgressBar progress;
     TextView aux_text1;
+    MediaPlayer mediaPlayer;
 
     private static final String TAG = "TimerActivity";
 
@@ -102,16 +102,12 @@ public class TimerActivity extends AppCompatActivity {
             @Override
             public void onTick(long l) {
                 updateTimer(l);
-                if (l < 1200000) {
-                    // beep thrice
-                    MediaPlayer mediaPlayer =  MediaPlayer.create(TimerActivity.this, R.raw.goes_without_saying);
-                        for (int i = 0 ; i < 3  ; i++) { mediaPlayer.start(); }
-                }
             }
 
             @Override
             public void onFinish() {
-                TextView sessionState = (TextView) findViewById(R.id.sessionDetailDisplay);
+                    mediaPlayer =  MediaPlayer.create(TimerActivity.this, R.raw.goes_without_saying);
+                    mediaPlayer.start();
                 setUpForWork(session);
             }
         }.start();
@@ -120,6 +116,8 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void endSession(Session session) {
+        mediaPlayer =  MediaPlayer.create(TimerActivity.this, R.raw.goes_without_saying);
+        mediaPlayer.start();
         TextView sessionState = (TextView) findViewById(R.id.sessionDetailDisplay);
         sessionState.setText("Your Session is complete! Congratulations!");
         session.setCompleted(TRUE);
