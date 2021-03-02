@@ -11,7 +11,10 @@ import static java.lang.Boolean.FALSE;
 
 @Entity
 public class Session {
-    @PrimaryKey(autoGenerate = true)
+    
+// random commnet for testing
+
+@PrimaryKey(autoGenerate = true)
     private int id = 0;
     @ColumnInfo(name = "focus")
     private String focus;
